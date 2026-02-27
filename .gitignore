@@ -1,0 +1,28 @@
+# Dependencias (esta carpeta es enorme y se genera con npm install)
+node_modules/
+
+# Compilación (archivos generados al transformar TS a JS)
+dist/
+artifacts/
+
+# Variables de entorno (aquí irán tus contraseñas de BD más adelante)
+.env
+.env.development
+.env.production
+
+# Logs de errores
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Configuración de editores (opcional, pero recomendado)
+.vscode/
+.idea/
+*.swp
+
+# Carpeta de Imagenes
+uploads/
