@@ -181,7 +181,7 @@ export class OrdersService {
   async actualizarEstado(id: number, nuevoEstado: OrderStatus) {
     this.logger.log(`Cambiando estado del pedido ${id} a ${nuevoEstado}`);
 
-    // Comentario: Corregimos la sintaxis de las relaciones para que TypeORM cargue todo correctamente [cite: 2026-02-23]
+    // Comentario: Corregimos la sintaxis de las relaciones para que TypeORM cargue todo correctamente 
     const pedido = await this.orderRepo.findOne({
       where: { id },
       relations: {
@@ -198,7 +198,7 @@ export class OrdersService {
 
     if (!pedido) throw new NotFoundException('Pedido no encontrado');
 
-    // 1. Máquina de Estados: Definimos transiciones legales [cite: 2026-02-23]
+    // 1. Máquina de Estados: Definimos transiciones legales 
     const transicionesValidas: Record<OrderStatus, OrderStatus[]> = {
       [OrderStatus.PENDIENTE]: [OrderStatus.PAGADO, OrderStatus.CANCELADO],
       [OrderStatus.PAGADO]: [OrderStatus.ENVIADO],
@@ -206,14 +206,14 @@ export class OrdersService {
       [OrderStatus.CANCELADO]: [],
     };
 
-    // Comentario: Validamos si el cambio de estado es posible según la lógica de negocio [cite: 2026-02-23]
+    // Comentario: Validamos si el cambio de estado es posible según la lógica de negocio 
     if (!transicionesValidas[pedido.estado].includes(nuevoEstado)) {
       throw new BadRequestException(
         `Transición no permitida: No se puede pasar de ${pedido.estado} a ${nuevoEstado}`
       );
     }
 
-    // 2. Lógica de Negocio: Gestión de Stock [cite: 2026-02-23]
+    // 2. Lógica de Negocio: Gestión de Stock 
     // Comentario: Si el estado cambia a PAGADO, restamos los productos del almacén
     if (nuevoEstado === OrderStatus.PAGADO) {
       await this.descontarStock(pedido);
@@ -223,7 +223,7 @@ export class OrdersService {
     pedido.estado = nuevoEstado;
     const pedidoActualizado = await this.orderRepo.save(pedido);
 
-    // 4. Envío de Notificación Real [cite: 2026-02-23]
+    // 4. Envío de Notificación Real 
     if (pedidoActualizado.usuario?.email) {
       try {
         await this.mailService.enviarNotificacionEstado(
@@ -233,7 +233,7 @@ export class OrdersService {
           nuevoEstado,
         );
       } catch (error) {
-        // Comentario: Registramos el fallo del mail pero permitimos que la API responda éxito [cite: 2026-02-23]
+        // Comentario: Registramos el fallo del mail pero permitimos que la API responda éxito 
         this.logger.error(`Error al enviar email para el pedido ${id}: ${error.message}`);
       }
     }
@@ -242,7 +242,7 @@ export class OrdersService {
   }
 
   async getStats() {
-    // 1. Ingresos y cantidad de pedidos exitosos [cite: 2026-02-23]
+    // 1. Ingresos y cantidad de pedidos exitosos 
     const statsGenerales = await this.orderRepo
       .createQueryBuilder('pedido')
       .select('SUM(pedido.total)', 'ingresosTotales')
@@ -252,8 +252,8 @@ export class OrdersService {
       })
       .getRawOne();
 
-    // 2. Top 5 Productos más vendidos [cite: 2026-02-23]
-    // Comentario: Agrupamos por producto y sumamos las cantidades vendidas [cite: 2026-02-20]
+    // 2. Top 5 Productos más vendidos 
+    // Comentario: Agrupamos por producto y sumamos las cantidades vendidas 
     const topProductos = await this.itemRepo
       .createQueryBuilder('item')
       .leftJoin('item.variante', 'variante')
@@ -264,7 +264,7 @@ export class OrdersService {
       .addGroupBy('producto.nombre')
       .orderBy('vendidos', 'DESC')
       .limit(5)
-      .getRawMany(); // Comentario: Usamos getRawMany para obtener la lista de resultados [cite: 2026-02-23]
+      .getRawMany(); // Comentario: Usamos getRawMany para obtener la lista de resultados 
 
     return {
       resumen: {
@@ -281,14 +281,14 @@ export class OrdersService {
 
   /**
     * Método para descontar stock de las variantes una vez confirmado el pago.
-    * ✅ Cambiado de 'pedidoId: number' a 'pedido: Order' para evitar re-consultar la BD. [cite: 2026-02-23]
+    * ✅ Cambiado de 'pedidoId: number' a 'pedido: Order' para evitar re-consultar la BD. 
     */
   private async descontarStock(pedido: Order) {
-    // Comentario: Como ya traemos las relaciones del findOne, solo iteramos [cite: 2026-02-23]
+    // Comentario: Como ya traemos las relaciones del findOne, solo iteramos 
     for (const item of pedido.items) {
       const variante = item.variante;
 
-      // Comentario: Usamos los nombres de las relaciones para el log informativo [cite: 2026-02-23]
+      // Comentario: Usamos los nombres de las relaciones para el log informativo 
       const nombreVariante = `${variante.producto.nombre} (${variante.talla.nombre} / ${variante.color.nombre})`;
 
       if (variante.stock < item.cantidad) {
@@ -297,7 +297,7 @@ export class OrdersService {
         );
       }
 
-      // Comentario: Restamos y guardamos la variante actualizada [cite: 2026-02-23]
+      // Comentario: Restamos y guardamos la variante actualizada 
       variante.stock -= item.cantidad;
       await this.variantRepo.save(variante);
 

@@ -2,7 +2,7 @@ import { IsNumber, IsInt, Min, IsPositive } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVariantDto {
-  @ApiProperty({ example: 1, description: 'ID de la Talla (relación con Size)' }) // Comentario: Swagger ahora mostrará este campo [cite: 2026-02-25]
+  @ApiProperty({ example: 1, description: 'ID de la Talla (relación con Size)' }) // Comentario: Swagger ahora mostrará este campo 
   @IsInt()
   @IsPositive()
   tallaId: number;

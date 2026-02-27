@@ -6,5 +6,5 @@ export class Size {
   id: number;
 
   @Column({ unique: true })
-  nombre: string; // Ej: 'S', 'M', 'L', 'XL' [cite: 2026-02-20]
+  nombre: string; // Ej: 'S', 'M', 'L', 'XL' 
 }

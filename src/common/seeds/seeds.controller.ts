@@ -13,7 +13,7 @@ export class SeedsController {
   constructor(private readonly seedsService: SeedsService) { }
 
   @Post('run')
-  @UseGuards(AuthGuard('jwt'), RolesGuard) // Comentario: ¡Solo un Admin debería poder ejecutar seeds! [cite: 2026-02-23]
+  @UseGuards(AuthGuard('jwt'), RolesGuard) // Comentario: ¡Solo un Admin debería poder ejecutar seeds! 
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Inicializa la DB' })
   async runSeeds() {

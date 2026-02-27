@@ -64,7 +64,7 @@ export class ProductsAdminController {
     async crear(
         @Body() createProductDto: CreateProductDto
     ) {
-        // Comentario: Registra el producto final con sus precios y rutas de imagen [cite: 2026-02-20]
+        // Comentario: Registra el producto final con sus precios y rutas de imagen 
         return await this.productsService.crearProducto(createProductDto);
     }
 
@@ -75,7 +75,7 @@ export class ProductsAdminController {
         @Param('id', ParseIntPipe) productId: number,
         @Body() dto: CreateVariantDto
     ) {
-        // Comentario: Delegamos al servicio la creación de la variante [cite: 2026-02-23]
+        // Comentario: Delegamos al servicio la creación de la variante 
         return await this.productsService.addVariant(productId, dto);
     }
 
@@ -93,7 +93,7 @@ export class ProductsAdminController {
         @Param('id', ParseIntPipe) id: number,
         @Body() updateProductDto: UpdateProductDto // ✅ Usamos el DTO de actualización
     ) {
-        // Comentario: Llama al servicio para actualizar solo los campos enviados [cite: 2026-02-23]
+        // Comentario: Llama al servicio para actualizar solo los campos enviados 
         return await this.productsService.update(id, updateProductDto);
     }
 }

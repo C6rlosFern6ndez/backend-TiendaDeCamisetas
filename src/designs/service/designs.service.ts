@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, LessThan, Repository } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
-import sharp from 'sharp'; // Comentario: Importación corregida para evitar errores de tipo [cite: 2026-02-25]
+import sharp from 'sharp'; // Comentario: Importación corregida para evitar errores de tipo 
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { OrderItem } from '../../orders/entities/order-item.entity'; // Comentario: Asegúrate de que la ruta sea correcta según tu carpeta
 import { UserDesign } from '../entities/user-design.entity';
@@ -18,7 +18,7 @@ export class DesignsService {
   constructor(
     @InjectRepository(UserDesign)
     private readonly repo: Repository<UserDesign>,
-    private dataSource: DataSource, // Comentario: DataSource inyectado correctamente para consultas externas [cite: 2026-02-23]
+    private dataSource: DataSource, // Comentario: DataSource inyectado correctamente para consultas externas 
   ) { }
 
   /**
@@ -43,7 +43,7 @@ export class DesignsService {
    * Crea un diseño: Guarda el original y crea la miniatura WebP
    */
   async crear(userId: number, dto: CreateDesignDto, rutaArchivoOriginal: string) {
-    // Comentario: Definimos las rutas arriba para que sean accesibles en el 'try' y en el 'catch' [cite: 2026-02-23]
+    // Comentario: Definimos las rutas arriba para que sean accesibles en el 'try' y en el 'catch' 
     const folderThumb = './uploads/thumbnails';
     const nombreBase = path.parse(rutaArchivoOriginal).name;
     const rutaThumbnail = path.join(folderThumb, `${nombreBase}.webp`);
@@ -54,7 +54,7 @@ export class DesignsService {
     }
 
     try {
-      // Comentario: Generación de miniatura [cite: 2026-02-25]
+      // Comentario: Generación de miniatura 
       await sharp(rutaArchivoOriginal)
         .resize(400, 400, { fit: 'inside' })
         .webp({ quality: 80 })
@@ -86,7 +86,7 @@ export class DesignsService {
       return await this.repo.save(nuevoDiseño);
 
     } catch (error) {
-      // Comentario: Si algo falla, borramos los archivos físicos para no dejar basura [cite: 2026-02-23]
+      // Comentario: Si algo falla, borramos los archivos físicos para no dejar basura 
       this.limpiarArchivos([rutaArchivoOriginal, rutaThumbnail]); // ✅ Reconocida
       throw error;
     }
@@ -120,7 +120,7 @@ export class DesignsService {
   }
 
   /**
-   * Tarea programada: Limpia diseños públicos obsoletos [cite: 2026-02-20]
+   * Tarea programada: Limpia diseños públicos obsoletos 
    */
   @Cron(CronExpression.EVERY_DAY_AT_3AM)
   async limpiarDisenosPublicosObsoletos() {
@@ -133,7 +133,7 @@ export class DesignsService {
     const disenosAntiguos = await this.repo.find({
       where: {
         esPublico: true,
-        createdAt: LessThan(fechaLimite) // Comentario: Asegúrate que tu entidad tenga @CreateDateColumn() createdAt: Date; [cite: 2026-02-23]
+        createdAt: LessThan(fechaLimite) // Comentario: Asegúrate que tu entidad tenga @CreateDateColumn() createdAt: Date; 
       }
     });
 

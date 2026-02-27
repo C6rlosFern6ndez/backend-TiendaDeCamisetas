@@ -12,7 +12,7 @@ export class ProductVariant {
   stock: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0.0 })
-  precioExtra: number; // Comentario: Por si una XXL cuesta más [cite: 2026-02-20]
+  precioExtra: number; // Comentario: Por si una XXL cuesta más 
 
   // Relación con el Producto Base
   @ManyToOne(() => Product, (product) => product.variantes, { onDelete: 'CASCADE' })

@@ -17,7 +17,7 @@ export class CreateDesignDto {
   textoOpcional?: string;
 
   @ApiProperty({ example: true, default: false })
-  // Comentario: Convierte el string "true"/"false" del form-data a booleano real [cite: 2026-02-23]
+  // Comentario: Convierte el string "true"/"false" del form-data a booleano real 
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   @IsOptional()

@@ -14,7 +14,7 @@ export class ProductVariantsService {
   ) { }
 
   async create(dto: CreateVariantDto & { productId: number }) {
-    // Comentario: Ahora pasamos objetos con ID para las relaciones [cite: 2026-02-23]
+    // Comentario: Ahora pasamos objetos con ID para las relaciones 
     const variant = this.repo.create({
       stock: dto.stock,
       precioExtra: dto.precioExtra || 0,

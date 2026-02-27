@@ -21,7 +21,7 @@ export class Order {
   })
   estado: OrderStatus;
 
-  @ManyToOne(() => User, (user) => user.id) // Comentario: Añadimos la referencia al campo id del usuario [cite: 2026-02-20]
+  @ManyToOne(() => User, (user) => user.id) // Comentario: Añadimos la referencia al campo id del usuario 
   usuario: User;
 
   @OneToMany(() => OrderItem, (item) => item.pedido)

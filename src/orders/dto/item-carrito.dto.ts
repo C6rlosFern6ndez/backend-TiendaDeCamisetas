@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsInt, IsBoolean, IsPositive, IsString } from 'class-validator';
 
-// Comentario: Exportamos la clase para que tanto el otro DTO como el Servicio la usen [cite: 2026-02-23]
+// Comentario: Exportamos la clase para que tanto el otro DTO como el Servicio la usen 
 export class ItemCarritoDto {
   @ApiProperty({ example: 1, description: 'ID de la variante (talla/color)' })
   @IsInt()

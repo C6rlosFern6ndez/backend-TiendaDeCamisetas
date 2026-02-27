@@ -29,7 +29,7 @@ export class CreateProductDto {
     description: 'Lista de variantes (tallas/colores) para este producto' 
   })
   @IsArray()
-  @ValidateNested({ each: true }) // Comentario: Valida cada variante dentro del array [cite: 2026-02-23]
+  @ValidateNested({ each: true }) // Comentario: Valida cada variante dentro del array 
   @Type(() => CreateVariantDto)
   variants: CreateVariantDto[];
 }

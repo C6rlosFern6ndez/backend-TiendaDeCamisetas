@@ -20,6 +20,6 @@ export class CreateUserDto {
   @ApiProperty({ enum: UserRole, default: UserRole.USER, required: false })
   @IsEnum(UserRole)
   @IsOptional()
-  // Comentario: Solo el Admin debería poder enviar este campo, pero lo definimos aquí para el servicio [cite: 2026-02-23]
+  // Comentario: Solo el Admin debería poder enviar este campo, pero lo definimos aquí para el servicio 
   rol?: UserRole;
 }

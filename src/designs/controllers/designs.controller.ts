@@ -21,7 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateDesignDto } from '../dto/create-design.dto';
 
-@ApiTags('Diseños') // Comentario: Gestión de imágenes y galería personalizada [cite: 2026-02-20]
+@ApiTags('Diseños') // Comentario: Gestión de imágenes y galería personalizada 
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Controller('designs')
@@ -35,7 +35,7 @@ export class DesignsController {
     schema: {
       type: 'object',
       properties: {
-        file: { type: 'string', format: 'binary' }, // Comentario: Define el campo de archivo en la UI [cite: 2026-02-20]
+        file: { type: 'string', format: 'binary' }, // Comentario: Define el campo de archivo en la UI 
         nombre: { type: 'string' },
         esPublico: { type: 'boolean' },
       },
@@ -48,20 +48,20 @@ export class DesignsController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', {
     storage: diskStorage({
-      destination: './uploads/designs', // Comentario: Carpeta donde se guardarán físicamente los archivos [cite: 2026-02-23]
+      destination: './uploads/designs', // Comentario: Carpeta donde se guardarán físicamente los archivos 
       filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
         cb(null, `design-${uniqueSuffix}${extname(file.originalname)}`);
       },
     }),
     fileFilter: (req, file, cb) => {
-      // Comentario: Validamos que solo se suban formatos compatibles con impresión [cite: 2026-02-20]
+      // Comentario: Validamos que solo se suban formatos compatibles con impresión 
       if (!file.mimetype.match(/\/(jpg|jpeg|png|webp)$/)) {
         return cb(new BadRequestException('Formato de imagen no permitido'), false);
       }
       cb(null, true);
     },
-    // ✅ Cambio realizado: Incrementado a 20MB para soportar alta resolución (300 DPI) [cite: 2026-02-25]
+    // ✅ Cambio realizado: Incrementado a 20MB para soportar alta resolución (300 DPI)
     limits: { fileSize: 20 * 1024 * 1024 }
   }))
 
@@ -74,7 +74,7 @@ export class DesignsController {
   ) {
     if (!file) throw new BadRequestException('No se ha seleccionado archivo');
 
-    // Comentario: El DTO ya filtró y transformó los datos aquí [cite: 2026-02-23]
+    // Comentario: El DTO ya filtró y transformó los datos aquí 
     return await this.designsService.crear(req.user.id, createDesignDto, file.path);
   }
 

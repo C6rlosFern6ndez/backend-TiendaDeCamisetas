@@ -5,7 +5,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  // Comentario: Método genérico para enviar notificaciones de estado [cite: 2026-02-23]
+  // Comentario: Método genérico para enviar notificaciones de estado 
   async enviarNotificacionEstado(email: string, nombre: string, pedidoId: number, estado: string) {
     await this.mailerService.sendMail({
       to: email,

@@ -20,7 +20,7 @@ import {
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
-@ApiTags('Usuarios') // Comentario: Categoría en la interfaz de Swagger [cite: 2026-02-20]
+@ApiTags('Usuarios') // Comentario: Categoría en la interfaz de Swagger 
 @Controller('users')
 export class UsersController {
   constructor(private readonly service: UsersService) {}
@@ -30,11 +30,11 @@ export class UsersController {
   @ApiCreatedResponse({ description: 'Usuario creado correctamente' })
   @Post()
   create(@Body() createUserDto: CreateUserDto) { 
-    // Comentario: El registro es público para permitir nuevos clientes [cite: 2026-02-20]
+    // Comentario: El registro es público para permitir nuevos clientes 
     return this.service.create(createUserDto); 
   }
 
-  @ApiBearerAuth() // Comentario: Requiere token JWT en Swagger [cite: 2026-02-23]
+  @ApiBearerAuth() // Comentario: Requiere token JWT en Swagger 
   @ApiOperation({ summary: 'Listar todos los usuarios (Solo Admin)' })
   @ApiOkResponse({ description: 'Lista completa de usuarios para gestión administrativa' })
   @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -65,13 +65,13 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto, 
     @Req() req: any 
   ) {
-    // Comentario: Validación de propiedad o rol administrativo [cite: 2026-02-20]
+    // Comentario: Validación de propiedad o rol administrativo 
     if (req.user.rol !== UserRole.ADMIN && req.user.id !== +id) {
       throw new ForbiddenException('No tienes permiso para modificar este perfil');
     }
 
     if (req.user.rol !== UserRole.ADMIN) {
-      delete updateUserDto.rol; // Comentario: Un usuario normal no puede subirse el rango solo [cite: 2026-02-23]
+      delete updateUserDto.rol; // Comentario: Un usuario normal no puede subirse el rango solo 
     }
 
     return this.service.update(+id, updateUserDto);

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/swagger';
 import { RegisterDto } from '../dto/register.dto';
 
-@ApiTags('Autenticación') // Comentario: Sección para registro y acceso al sistema [cite: 2026-02-20]
+@ApiTags('Autenticación') // Comentario: Sección para registro y acceso al sistema 
 @Controller('auth')
 export class AuthController {
     constructor(
@@ -23,7 +23,7 @@ export class AuthController {
     @ApiCreatedResponse({ description: 'Usuario registrado con éxito' })
     @Post('register')
     async register(@Body() registerDto: RegisterDto) {
-        // Comentario: Delegamos la creación al servicio de usuarios [cite: 2026-02-23]
+        // Comentario: Delegamos la creación al servicio de usuarios 
         return this.usersService.create(registerDto);
     }
 
@@ -32,14 +32,14 @@ export class AuthController {
     @ApiCreatedResponse({ description: 'Login exitoso, devuelve el token access_token' })
     @ApiUnauthorizedResponse({ description: 'El correo o la contraseña son incorrectos' })
     @Post('login')
-    async login(@Body() loginDto: LoginDto) { // ✅ Ahora usamos el DTO validado [cite: 2026-02-25]
+    async login(@Body() loginDto: LoginDto) { // ✅ Ahora usamos el DTO validado 
         const user = await this.authService.validateUser(loginDto.email, loginDto.password);
 
         if (!user) {
             throw new UnauthorizedException('Credenciales inválidas');
         }
 
-        // Comentario: 'user' contiene el id y rol necesarios para generar el token [cite: 2026-02-20]
+        // Comentario: 'user' contiene el id y rol necesarios para generar el token 
         return this.authService.login(user);
     }
 }

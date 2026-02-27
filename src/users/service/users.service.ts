@@ -15,7 +15,7 @@ export class UsersService {
 
   // Crear un nuevo usuario
   async create(dto: CreateUserDto) {
-    // Comentario: Encriptamos la contraseña antes de guardar [cite: 2026-02-20]
+    // Comentario: Encriptamos la contraseña antes de guardar 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(dto.password, salt);
 
@@ -47,7 +47,7 @@ export class UsersService {
       dto.password = await bcrypt.hash(dto.password, salt);
     }
 
-    // Comentario: Fusionamos los datos del DTO con la entidad encontrada [cite: 2026-02-23]
+    // Comentario: Fusionamos los datos del DTO con la entidad encontrada 
     Object.assign(user, dto);
     return this.repo.save(user);
   }

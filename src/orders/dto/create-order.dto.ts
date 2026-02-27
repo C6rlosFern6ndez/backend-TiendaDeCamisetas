@@ -8,6 +8,6 @@ export class CreateOrderDto {
   @IsArray()
   @IsNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => ItemCarritoDto) // Comentario: Clase necesaria para que class-transformer sepa cómo validar [cite: 2026-02-23]
+  @Type(() => ItemCarritoDto) // Comentario: Clase necesaria para que class-transformer sepa cómo validar 
   items: ItemCarritoDto[];
 }

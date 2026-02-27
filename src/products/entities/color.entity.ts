@@ -6,8 +6,8 @@ export class Color {
   id: number;
 
   @Column({ unique: true })
-  nombre: string; // Ej: 'Blanco', 'Negro' [cite: 2026-02-20]
+  nombre: string; // Ej: 'Blanco', 'Negro' 
 
   @Column({ nullable: true })
-  codigoHex: string; // Ej: '#FFFFFF' (útil para el Front) [cite: 2026-02-23]
+  codigoHex: string; // Ej: '#FFFFFF' (útil para el Front) 
 }

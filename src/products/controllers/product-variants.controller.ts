@@ -15,10 +15,10 @@ import {
 } from '@nestjs/swagger';
 import { UpdateVariantDto } from '../dto/update-variant.dto';
 
-@ApiTags('Variantes de Producto') // Comentario: Sección para gestionar Tallas, Colores y Stock [cite: 2026-02-20]
+@ApiTags('Variantes de Producto') // Comentario: Sección para gestionar Tallas, Colores y Stock 
 @Controller('product-variants')
 export class ProductVariantsController {
-  // Comentario: Cumplimos el patrón inyectando solo el Servicio [cite: 2026-02-23]
+  // Comentario: Cumplimos el patrón inyectando solo el Servicio 
   constructor(private readonly service: ProductVariantsService) {}
 
   @ApiBearerAuth()

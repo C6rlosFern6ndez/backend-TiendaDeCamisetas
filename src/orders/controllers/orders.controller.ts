@@ -17,7 +17,7 @@ import {
   ApiBadRequestResponse
 } from '@nestjs/swagger';
 
-@ApiTags('Pedidos') // Comentario: Agrupa todos los endpoints de pedidos en Swagger [cite: 2026-02-20]
+@ApiTags('Pedidos') // Comentario: Agrupa todos los endpoints de pedidos en Swagger 
 @ApiBearerAuth()    // Comentario: Indica que se requiere el token JWT para estos endpoints
 @Controller('orders')
 export class OrdersController {
@@ -35,7 +35,7 @@ export class OrdersController {
   ) {
     const usuarioId = req.user.id;
 
-    // Comentario: Pasamos solo el array de items que el servicio espera [cite: 2026-02-23]
+    // Comentario: Pasamos solo el array de items que el servicio espera 
     return await this.ordersService.crearPedido(usuarioId, createOrderDto.items);
   }
 

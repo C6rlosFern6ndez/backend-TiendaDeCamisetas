@@ -16,7 +16,7 @@ import {
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { SearchProductsDto } from '../dto/search-products.dto';
 
-@ApiTags('Productos') // Comentario: Sección de catálogo y gestión de stock [cite: 2026-02-20]
+@ApiTags('Productos') // Comentario: Sección de catálogo y gestión de stock 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly service: ProductsService) { }
@@ -71,7 +71,7 @@ export class ProductsController {
   @Get('search')
   @ApiOperation({ summary: 'Buscador avanzado con filtros y paginación' })
   async search(@Query() searchDto: SearchProductsDto) {
-    // Comentario: Los Query Params se validan automáticamente gracias al DTO [cite: 2026-02-23]
+    // Comentario: Los Query Params se validan automáticamente gracias al DTO 
     return await this.service.search(searchDto);
   }
 }

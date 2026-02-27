@@ -6,7 +6,7 @@ import { MailService } from './mail.service';
 @Module({
   imports: [
     MailerModule.forRoot({
-      // Comentario: Configuración del servidor SMTP (usa variables de entorno .env) [cite: 2026-02-23]
+      // Comentario: Configuración del servidor SMTP (usa variables de entorno .env) 
       transport: {
         host: process.env.MAIL_HOST,
         port: Number(process.env.MAIL_PORT),

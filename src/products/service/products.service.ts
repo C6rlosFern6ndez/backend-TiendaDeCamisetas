@@ -14,7 +14,7 @@ export class ProductsService {
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
 
-    // ✅ Inyectamos formalmente el repo de variantes [cite: 2026-02-23]
+    // ✅ Inyectamos formalmente el repo de variantes 
     @InjectRepository(ProductVariant)
     private readonly variantRepo: Repository<ProductVariant>,
   ) { }
@@ -23,7 +23,7 @@ export class ProductsService {
   async crearProducto(dto: CreateProductDto) {
     const product = this.productRepo.create({
       ...dto,
-      material: dto.nombre ? 'ALGODÓN' : 'POLIÉSTER', // Lógica de negocio [cite: 2026-02-23]
+      material: dto.nombre ? 'ALGODÓN' : 'POLIÉSTER', // Lógica de negocio 
     });
     return await this.productRepo.save(product);
   }
@@ -57,7 +57,7 @@ export class ProductsService {
     return await this.productRepo.softDelete(id);
   }
 
-  // ✅ Ahora addVariant usa el repositorio inyectado, no el manager [cite: 2026-02-23]
+  // ✅ Ahora addVariant usa el repositorio inyectado, no el manager 
   async addVariant(productId: number, dto: CreateVariantDto) {
     const producto = await this.findOne(productId);
 
@@ -70,7 +70,7 @@ export class ProductsService {
   }
 
   async getLowStockAlerts() {
-    // ✅ Uso directo del repositorio especializado [cite: 2026-02-23]
+    // ✅ Uso directo del repositorio especializado 
     return await this.variantRepo.find({
       where: { stock: LessThan(5) },
       relations: ['product'],
@@ -80,7 +80,7 @@ export class ProductsService {
   async search(query: SearchProductsDto) {
     const { termino, categoriaId, precioMax, page = 1, limit = 10 } = query;
 
-    // Comentario: Calculamos cuántos registros saltar para la paginación [cite: 2026-02-23]
+    // Comentario: Calculamos cuántos registros saltar para la paginación 
     const skip = (page - 1) * limit;
 
     const queryBuilder = this.productRepo.createQueryBuilder('producto')
@@ -105,7 +105,7 @@ export class ProductsService {
       queryBuilder.andWhere('producto.precioBase <= :precioMax', { precioMax });
     }
 
-    // Comentario: Aplicamos paginación y ejecutamos [cite: 2026-02-23]
+    // Comentario: Aplicamos paginación y ejecutamos 
     const [items, total] = await queryBuilder
       .skip(skip)
       .take(limit)
